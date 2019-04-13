@@ -1,5 +1,5 @@
-import MatFunctions
-import Keys
+from MatFunctions import MatFunctions
+from Keys import Keys
 
 
 class Cryptography:

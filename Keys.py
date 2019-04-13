@@ -1,5 +1,5 @@
 import random
-import MatFunctions
+from MatFunctions import MatFunctions
 
 
 class Keys:
