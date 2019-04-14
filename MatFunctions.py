@@ -16,4 +16,5 @@ class MatFunctions:
             a = b
             b = mod
 
+        print(f'')
         return b

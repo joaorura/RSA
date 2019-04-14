@@ -3,11 +3,11 @@ from Keys import Keys
 
 
 class Encrypt:
-    def __init__(self, p, q, a, b):
+    def __init__(self, p, q):
         self.n = p * q
         self.phi = MatFunctions.phi(p, q)
         self.e = Keys.public(self.phi, self.n)
-        self.d = Keys.private(self.e, self.phi, a, b)
+        self.d = Keys.private(self.e, self.phi)
 
     def text(self, string):
         if type(string) != str:
@@ -27,11 +27,12 @@ class Decrypt:
         self.d = d
 
     def text(self, dec_list):
-        if type(dec_list) != "<class 'list'>":
+        if type(dec_list) != list:
             return -1
 
+        print(f'n: {self.n}')
         new_encrypt = []
         for i in dec_list:
-            new_encrypt.append(str((i ** self.d) % self.n))
+            new_encrypt.append((i ** self.d) % self.n)
 
         return new_encrypt
