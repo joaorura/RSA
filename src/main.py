@@ -9,17 +9,20 @@ def main(args=None,primes=None,files=None):
         args = sys.argv[1:2]
         primes = sys.argv[2:4]
         int_primes = [int(n) for n in primes]
-        files = sys.argv[4:5]
+        files = ''.join(sys.argv[4:5])
 
     if "encrypt" in args:
 
         p = int(int_primes[0])
         q = int(int_primes[1])
-        print("PARSER "+str(p)+" "+str(q))
+        
+        with open(str(files), "r") as file:
+            text = file.read().splitlines()
+
         encrypt = Encrypt(p, q)
         print('Encrypting...')
         csv_out = encrypt.text(str(files))
-
+        
         with open(file='encrypt.csv', mode='w') as file:
             for i in csv_out:
                 file.write(str(i) + '\n')
