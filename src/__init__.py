@@ -1,10 +1,11 @@
 from encrypt import *
 from decrypt import *
 from keys import *
+from maths import *
 from man import *
 import csv
-import random
 import sys
+
 
 def main(argv):
     if "generate" in argv:
@@ -16,10 +17,10 @@ def main(argv):
             print("One of them is not a prime number!")
             return
 
-        keys = Generate_keys(p, q)
+        keys = GenerateKeys(p, q)
         print("\nYour keys:")
-        print("\tPublic key (n, e):", keys.public.n,",", keys.public.e)
-        print("\tPrivate key (p, q, d):", p, ",", q, ",", keys.private.d)
+        print(f"\tPublic key: (n, e): {keys.public.n}, {keys.public.e}")
+        print(f"\tPrivate key: (n, d): {keys.public.n}, {keys.private.d}")
 
     elif "encrypt" in argv:
         print("Please provide the name of the file you wish to encrypt and your public key:")
@@ -34,7 +35,8 @@ def main(argv):
             text = file.read()
 
         print('\nEncrypting...')
-        csv_out = Encrypt.text(Encrypt, text, n, e)
+        encrypt = Encrypt(n, e)
+        csv_out = encrypt.text(text)
 
         file_name = input("\nName the csv file: ")
 
@@ -46,11 +48,10 @@ def main(argv):
         print("Please provide the name of the file you wish to decrypt and your private key:")
 
         file_name = input("\tFile name: ")
+        # file_name = '/home/joaorura/my_workspace/RSA/src/encyrpt.csv'
 
-        print("\tPrivate key (p, q, d):")
-        p = int(input("\t\tp: "))
-        q = int(input("\t\tq: "))
-        n = p * q
+        print("\tPrivate key: (n, d):")
+        n = int(input("\t\tn: "))
         d = int(input("\t\td: "))
 
         with open(file=file_name, mode='r') as file:
@@ -66,12 +67,12 @@ def main(argv):
 
         with open(file=file_name, mode="w") as file:
             file.write(string)
-
     else:
         usage()
         sys.exit(1)
 
     print("\nIt's finished!")
+
 
 if __name__ == "__main__":
     main(sys.argv)

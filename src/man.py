@@ -13,20 +13,18 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import platform
-import sys
+
 def usage():
     OPTIONS= r"""
     USAGE:
 
-        rsa [COMMAND] [ARGUMENTS] [FILES]
-        rsa [COMMAND] |...| [FILES]
+        rsa [COMMAND]  
 
         examples:
 
-        rsa encrypt 3 7 my_text.txt
-        rsa decrypt my_text.csv
-
+        rsa encrypt
+        rsa decrypt
+        rsa generate  
     """
     print(OPTIONS)
 
