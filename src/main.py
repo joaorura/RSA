@@ -1,8 +1,9 @@
 from cryptography import *
+from keys import *
+from man import *
 import csv
 import random
 import sys
-from man import *
 
 def main(args=None,primes=None,files=None):
     if args is None and primes is None and files is None:
@@ -20,7 +21,7 @@ def main(args=None,primes=None,files=None):
             print("One of them is not a prime number!")
             return
 
-        public = Public(p, q)
+        keys = Generate_keys(p, q)
 
         with open(str(files), "r") as file:
             text = file.read().splitlines()
