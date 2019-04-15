@@ -15,14 +15,20 @@ def main(args=None,primes=None,files=None):
 
         p = int(int_primes[0])
         q = int(int_primes[1])
-        
+
+        if Math.is_prime(p) == False or Math.is_prime(q) == False:
+            print("One of them is not a prime number!")
+            return
+
+        public = Public(p, q)
+
         with open(str(files), "r") as file:
             text = file.read().splitlines()
 
         encrypt = Encrypt(p, q)
         print('Encrypting...')
         csv_out = encrypt.text(str(files))
-        
+
         with open(file='encrypt.csv', mode='w') as file:
             for i in csv_out:
                 file.write(str(i) + '\n')
