@@ -13,7 +13,7 @@ class Math:
         else:
             return False
 
-    def gcd(self, n, m):
+    def gcd(self, n, m):#mdc
         if n > m:
             m, n = n, m
 
@@ -24,7 +24,7 @@ class Math:
             n = m
             m = temp
 
-    def lcm(self, p, q):
+    def lcm(self, p, q):#mmc
         return (abs(p * q) // self.gcd(self, p, q))
 
     def coprime(self, phi):

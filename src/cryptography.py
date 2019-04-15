@@ -1,4 +1,4 @@
-from libmath import *
+from maths import *
 from keys import *
 
 
