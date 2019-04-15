@@ -1,10 +1,15 @@
+import math
+
 class Math:
     "Auxiliary mathematical functions"
 
     @staticmethod
     def is_prime(n):
+        if n % 2 == 0 and n > 2:
+            return False
+
         factors = 0
-        for i in range(1, n):
+        for i in range(1, int(math.sqrt(n)) + 1):
             if n % i == 0:
                 factors += 1
 
@@ -31,3 +36,14 @@ class Math:
         for e in range(2, phi):
             if self.gcd(self, e, phi) == 1:
                 return e
+
+    def mod_inverse(x,y):
+        def eea(a,b):
+            if b==0:return (1,0)
+            (q,r) = (a//b,a%b)
+            (s,t) = eea(b,r)
+            return (t, s-(q*t) )
+
+        inv = eea(x,y)[0]
+        if inv < 1: inv += y #we only want positive values
+        return inv

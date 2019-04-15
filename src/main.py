@@ -1,4 +1,5 @@
-from cryptography import *
+from encrypt import *
+from decrypt import *
 from keys import *
 from man import *
 import csv
@@ -9,7 +10,7 @@ def main(args=None,primes=None,files=None):
     if args is None and primes is None and files is None:
         args = sys.argv[1:2]
         primes = sys.argv[2:4]
-        int_primes = [int(n) for n in primes]
+        int_primes = [n for n in primes]
         files = ''.join(sys.argv[4:5])
 
     if "encrypt" in args:
@@ -23,24 +24,20 @@ def main(args=None,primes=None,files=None):
 
         keys = Generate_keys(p, q)
 
-        with open(str(files), "r") as file:
-            text = file.read().splitlines()
+        with open(files, "r") as file:
+            text = file.read()
 
-        encrypt = Encrypt(p, q)
         print('Encrypting...')
-        csv_out = encrypt.text(str(files))
+        csv_out = Encrypt.text(Encrypt, text, keys.public.e, keys.public.n)
 
         with open(file='encrypt.csv', mode='w') as file:
             for i in csv_out:
                 file.write(str(i) + '\n')
 
-        print(f"\nYour keys:\n\tn: {encrypt.n}\n\td; {encrypt.d}\n\nIt's finished")
+        print("\nYour keys:\n\tn:", keys.public.n, "\n\td:", keys.private.d, "\n\nIt's finished")
 
     elif "decrypt" in args:
-        file_name = input("\nWhich file do you want to decrypt?\t " +
-                          "(Remember for a extension it's (.csv)\n\tYour answer: ")
-        print("\nEnter with the keys (n and d): ")
-        with open(file=file_name, mode='r') as file:
+        with open(file=primes[0], mode='r') as file:
             read = []
             for row in csv.reader(file):
                 read.append(int(row[0]))
@@ -50,11 +47,12 @@ def main(args=None,primes=None,files=None):
 
         print("Decrypting...")
         decrypt = Decrypt(n, d)
-        print(decrypt.text(read))
         string_decry = ''.join(chr(i) for i in decrypt.text(read))
 
         print(f"Your text: {string_decry}\nIt's finished\n")
     else:
         usage()
         sys.exit(1)
-main()
+
+if __name__ == "__main__":
+    main()

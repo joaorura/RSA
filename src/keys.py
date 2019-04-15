@@ -3,7 +3,7 @@ from maths import *
 class Generate_keys:
     def __init__(self, p, q):
         self.public = Public(p, q)
-        self.Private = Private()
+        self.private = Private(self.public.e, self.public.phi)
 
 class Public:
     def __init__(self, p, q):
@@ -12,5 +12,5 @@ class Public:
         self.e = Math.coprime(Math, self.phi)
 
 class Private:
-    def __init__(self):
-        return
+    def __init__(self, e, phi):
+        self.d = Math.mod_inverse(e, phi)
