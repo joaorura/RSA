@@ -1,5 +1,5 @@
-from MatFunctions import MatFunctions
-from Keys import Keys
+from libmath import *
+from keys import *
 
 
 class Encrypt:

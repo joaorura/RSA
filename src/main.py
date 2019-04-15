@@ -1,19 +1,24 @@
-from Cryptography import *
+from cryptography import *
 import csv
 import random
+import sys
+from man import *
 
+def main(args=None,primes=None,files=None):
+    if args is None and primes is None and files is None:
+        args = sys.argv[1:2]
+        primes = sys.argv[2:4]
+        int_primes = [int(n) for n in primes]
+        files = sys.argv[4:5]
 
-def main():
-    go = int(input("\nYou want:\n\t0: Encrypt\n\t1: Decrypt\n\tYour answer: "))
+    if "encrypt" in args:
 
-    if go == 0:
-        txt = input("\nEnter the text: ")
-        print("\nEnter with two number primers (p and q): ")
-        p = int(input("\tP: "))
-        q = int(input("\tQ: "))
+        p = int(int_primes[0])
+        q = int(int_primes[1])
+        print("PARSER "+str(p)+" "+str(q))
         encrypt = Encrypt(p, q)
         print('Encrypting...')
-        csv_out = encrypt.text(txt)
+        csv_out = encrypt.text(str(files))
 
         with open(file='encrypt.csv', mode='w') as file:
             for i in csv_out:
@@ -21,7 +26,7 @@ def main():
 
         print(f"\nYour keys:\n\tn: {encrypt.n}\n\td; {encrypt.d}\n\nIt's finished")
 
-    elif go == 1:
+    elif "decrypt" in args:
         file_name = input("\nWhich file do you want to decrypt?\t " +
                           "(Remember for a extension it's (.csv)\n\tYour answer: ")
         print("\nEnter with the keys (n and d): ")
@@ -40,11 +45,6 @@ def main():
 
         print(f"Your text: {string_decry}\nIt's finished\n")
     else:
-        print("Enter a valid option!")
-        return -1
-
-    return 1
-
-
-if __name__ == '__main__':
-    main()
+        usage()
+        sys.exit(1)
+main()
