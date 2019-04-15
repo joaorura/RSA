@@ -2,7 +2,7 @@ from maths import *
 from keys import *
 
 class Encrypt:
-    def text(self, string, e, n):
+    def text(self, string, n, e):
         if type(string) != str:
             return -1
 

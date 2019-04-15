@@ -6,53 +6,72 @@ import csv
 import random
 import sys
 
-def main(args=None,primes=None,files=None):
-    if args is None and primes is None and files is None:
-        args = sys.argv[1:2]
-        primes = sys.argv[2:4]
-        int_primes = [n for n in primes]
-        files = ''.join(sys.argv[4:5])
-
-    if "encrypt" in args:
-
-        p = int(int_primes[0])
-        q = int(int_primes[1])
+def main(argv):
+    if "generate" in argv:
+        print("Please provide two prime numbers, P and Q:")
+        p = int(input("\tp: "))
+        q = int(input("\tq: "))
 
         if Math.is_prime(p) == False or Math.is_prime(q) == False:
             print("One of them is not a prime number!")
             return
 
         keys = Generate_keys(p, q)
+        print("\nYour keys:")
+        print("\tPublic key (n, e):", keys.public.n,",", keys.public.e)
+        print("\tPrivate key (p, q, d):", p, ",", q, ",", keys.private.d)
 
-        with open(files, "r") as file:
+    elif "encrypt" in argv:
+        print("Please provide the name of the file you wish to encrypt and your public key:")
+
+        file_name = input("\tFile name: ")
+
+        print("\tPublic key (n, e):")
+        n = int(input("\t\tn: "))
+        e = int(input("\t\te: "))
+
+        with open(file_name, "r") as file:
             text = file.read()
 
-        print('Encrypting...')
-        csv_out = Encrypt.text(Encrypt, text, keys.public.e, keys.public.n)
+        print('\nEncrypting...')
+        csv_out = Encrypt.text(Encrypt, text, n, e)
 
-        with open(file='encrypt.csv', mode='w') as file:
+        file_name = input("\nName the csv file: ")
+
+        with open(file=file_name, mode='w') as file:
             for i in csv_out:
                 file.write(str(i) + '\n')
 
-        print("\nYour keys:\n\tn:", keys.public.n, "\n\td:", keys.private.d, "\n\nIt's finished")
+    elif "decrypt" in argv:
+        print("Please provide the name of the file you wish to decrypt and your private key:")
 
-    elif "decrypt" in args:
-        with open(file=primes[0], mode='r') as file:
+        file_name = input("\tFile name: ")
+
+        print("\tPrivate key (p, q, d):")
+        p = int(input("\t\tp: "))
+        q = int(input("\t\tq: "))
+        n = p * q
+        d = int(input("\t\td: "))
+
+        with open(file=file_name, mode='r') as file:
             read = []
             for row in csv.reader(file):
                 read.append(int(row[0]))
 
-        n = int(input("\tn: "))
-        d = int(input("\td: "))
-
-        print("Decrypting...")
+        print("\nDecrypting...")
         decrypt = Decrypt(n, d)
-        string_decry = ''.join(chr(i) for i in decrypt.text(read))
+        string = ''.join(chr(i) for i in decrypt.text(read))
 
-        print(f"Your text: {string_decry}\nIt's finished\n")
+        file_name = input("\nName the decrypted file: ")
+
+        with open(file=file_name, mode="w") as file:
+            file.write(string)
+
     else:
         usage()
         sys.exit(1)
 
+    print("\nIt's finished!")
+
 if __name__ == "__main__":
-    main()
+    main(sys.argv)

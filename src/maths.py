@@ -33,14 +33,17 @@ class Math:
         return (abs(p * q) // self.gcd(self, p, q))
 
     def coprime(self, phi):
+        if phi == 2:
+            return -1
         for e in range(2, phi):
             if self.gcd(self, e, phi) == 1:
                 return e
 
     def mod_inverse(x,y):
         def eea(a,b):
-            if b==0:return (1,0)
-            (q,r) = (a//b,a%b)
+            if b == 0:
+                return (1,0)
+            (q,r) = (a // b, a % b)
             (s,t) = eea(b,r)
             return (t, s-(q*t) )
 
