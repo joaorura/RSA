@@ -18,13 +18,16 @@ def usage():
     OPTIONS= r"""
     USAGE:
 
-        rsa [COMMAND]  
+        rsa [TYPE] [COMMAND]  
 
         examples:
 
         rsa encrypt
         rsa decrypt
-        rsa generate  
+        rsa generate
+
+        rsa file encrypt
+        rsa file decrypt
     """
     print(OPTIONS)
 
