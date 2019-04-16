@@ -1,11 +1,12 @@
-from encrypt import *
-from decrypt import *
-from keys import *
-from maths import *
-from man import *
 import csv
 import sys
 
+from decrypt import *
+from encrypt import *
+from keys import *
+from man import *
+from maths import *
+from clr_file import *
 
 def main(argv):
     if "generate" in argv:
@@ -20,53 +21,65 @@ def main(argv):
         keys = GenerateKeys(p, q)
         print("\nYour keys:")
         print(f"\tPublic key: (n, e): {keys.public.n}, {keys.public.e}")
-        print(f"\tPrivate key: (n, d): {keys.public.n}, {keys.private.d}")
+        print(f"\tPrivate key: (p, q, d): {p}, {q}, {keys.private.d}")
 
     elif "encrypt" in argv:
         print("Please provide the name of the file you wish to encrypt and your public key:")
 
         file_name = input("\tFile name: ")
 
-        print("\tPublic key (n, e):")
-        n = int(input("\t\tn: "))
-        e = int(input("\t\te: "))
-
-        with open(file_name, "r") as file:
-            text = file.read()
+        if 'file' in argv:
+            n = 4247
+            e = 7
+        else:
+            print("\tPublic key (n, e):")
+            n = int(input("\t\tn: "))
+            e = int(input("\t\te: "))
 
         print('\nEncrypting...')
         encrypt = Encrypt(n, e)
-        csv_out = encrypt.text(text)
 
-        file_name = input("\nName the csv file: ")
+        if 'file' in argv:
+            encrypt.file(file_name)
+        else:
+            with open(file_name, "r") as file:
+               text = file.read()
 
-        with open(file=file_name, mode='w') as file:
-            for i in csv_out:
-                file.write(str(i) + '\n')
+            csv_out = encrypt.text(text)
+            file_name = input("\nName the csv file: ")
+            with open(file=file_name, mode='w') as file:
+                for i in csv_out:
+                    file.write(str(i) + '\n')
 
     elif "decrypt" in argv:
         print("Please provide the name of the file you wish to decrypt and your private key:")
 
         file_name = input("\tFile name: ")
-        # file_name = '/home/joaorura/my_workspace/RSA/src/encyrpt.csv'
 
-        print("\tPrivate key: (n, d):")
-        n = int(input("\t\tn: "))
-        d = int(input("\t\td: "))
+        if 'file' in argv:
+            n = 4247
+            d = 583
+        else:
+            print("\tPrivate key: (p, q, d):")
+            p = int(input("\t\tp: "))
+            q = int(input("\t\tq: "))
+            n = p * q
+            d = int(input("\t\td: "))
 
-        with open(file=file_name, mode='r') as file:
-            read = []
-            for row in csv.reader(file):
-                read.append(int(row[0]))
-
+        decry = Decrypt(n, d)
         print("\nDecrypting...")
-        decrypt = Decrypt(n, d)
-        string = ''.join(chr(i) for i in decrypt.text(read))
+        if 'file' in argv:
+            decry.file(file_name)
+        else:
+            with open(file=file_name, mode='r') as file:
+                read = []
+                for row in csv.reader(file):
+                    read.append(int(row[0]))
 
-        file_name = input("\nName the decrypted file: ")
-
-        with open(file=file_name, mode="w") as file:
-            file.write(string)
+            string = ''.join(chr(i) for i in decry.text(read))
+            file_name = input("\nName the decrypted file: ")
+            with open(file=file_name, mode="w") as file:
+                file.write(string)
     else:
         usage()
         sys.exit(1)

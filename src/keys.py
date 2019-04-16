@@ -1,5 +1,7 @@
-from maths import *
 import sys
+
+from maths import *
+
 
 class GenerateKeys:
     def __init__(self, p, q):
