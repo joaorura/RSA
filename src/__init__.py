@@ -63,8 +63,8 @@ def main(argv):
             print("\tPrivate key: (p, q, d):")
             p = int(input("\t\tp: "))
             q = int(input("\t\tq: "))
-            n = p * q
             d = int(input("\t\td: "))
+            n = p * q
 
         decry = Decrypt(n, d)
         print("\nDecrypting...")

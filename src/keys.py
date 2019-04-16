@@ -5,20 +5,20 @@ from maths import *
 
 class GenerateKeys:
     def __init__(self, p, q):
-        self.public = Public(p, q)
-        self.private = Private(self.public.e, self.public.phi)
+        self.public = PublicKeys(p, q)
+        self.private = PrivateKeys(self.public.e, self.public.phi)
 
-class Public:
+class PublicKeys:
     def __init__(self, p, q):
         self.n = p * q
-        self.phi = Math.lcm((p - 1), (q - 1))
+        phi = Math.lcm((p - 1), (q - 1))
         # self.phi = (p - 1) * (q - 1) #also works
-        self.e = Math.coprime(self.phi)
+        self.e = Math.coprime(phi)
 
         # if one of the primes is 2
         if self.e == -1:
             sys.exit(1)
 
-class Private:
+class PrivateKeys:
     def __init__(self, e, phi):
         self.d = Math.mod_inverse(e, phi)
