@@ -43,14 +43,13 @@ class Decrypt:
                         if i == 0:
                             bt = aux
                             i += 1
-                        if i == 1:
+                        elif i == 1:
                             bt += aux
                             i = 0
                             int_aux = int.from_bytes(bt, byteorder='big', signed=False)
                             exit_bt.append((int_aux ** self.d) % self.n)
 
                     for aux in exit_bt:
-                        print(aux)
                         file_write.write(aux.to_bytes(1, byteorder='big', signed=False))
 
                     del bt_aux

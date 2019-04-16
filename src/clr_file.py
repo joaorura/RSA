@@ -26,7 +26,6 @@ class ClrFile:
         buffer = []
         while True:
             byte_aux = self.file.read(1)
-            print(byte_aux)
             if byte_aux == b'':
                 if len(buffer) == 0:
                     return False

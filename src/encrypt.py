@@ -41,7 +41,6 @@ class Encrypt:
                     for aux in bt_aux:
                         int_aux = int.from_bytes(aux, byteorder='big', signed=False)
                         int_aux = (int_aux ** self.e) % self.n
-                        print(int_aux)
                         file_write.write(int_aux.to_bytes(2, byteorder='big', signed=False))
                     
                     del bt_aux

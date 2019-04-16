@@ -29,8 +29,8 @@ def main(argv):
         file_name = input("\tFile name: ")
 
         if 'file' in argv:
-            n = 4247
-            e = 7
+            n = 6533
+            e = 5
         else:
             print("\tPublic key (n, e):")
             n = int(input("\t\tn: "))
@@ -57,8 +57,8 @@ def main(argv):
         file_name = input("\tFile name: ")
 
         if 'file' in argv:
-            n = 4247
-            d = 583
+            n = 6533
+            d = 83
         else:
             print("\tPrivate key: (p, q, d):")
             p = int(input("\t\tp: "))
