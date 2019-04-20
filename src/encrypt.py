@@ -13,10 +13,15 @@ class Encrypt:
         if type(string) != str:
             raise Exception('Wrong paramater must be str, but you send a {type(string)}.')
 
-        chars = list(string)
+        chars = list(string.encode('ASCII'))
         new_encrypt = []
         for i in chars:
-            new_encrypt.append((ord(i) ** self.e) % self.n)
+            if i == 32:
+                new_encrypt.append((26 ** self.e) % self.n)
+            elif i <= 90 and i >= 65:
+                new_encrypt.append(((i - 65) ** self.e) % self.n)
+            else:
+                 raise Exception('Wrong file! Must be a file with only capital letters.')
 
         return new_encrypt
 
