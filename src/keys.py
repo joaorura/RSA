@@ -11,9 +11,9 @@ class GenerateKeys:
 class PublicKeys:
     def __init__(self, p, q):
         self.n = p * q
-        phi = Math.lcm((p - 1), (q - 1))
+        self.phi = Math.lcm((p - 1), (q - 1))
         # self.phi = (p - 1) * (q - 1) #also works
-        self.e = Math.coprime(phi)
+        self.e = Math.coprime(self.phi)
 
         # if one of the primes is 2
         if self.e == -1:
